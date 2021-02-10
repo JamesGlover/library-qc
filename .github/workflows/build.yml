@@ -1,13 +1,14 @@
-name: Build Project
+name: Release Project
 on:
   push:
     branches:
       - devel
       - master
+      - test
 
 jobs:
   build:
-    name: Build
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -33,4 +34,6 @@ jobs:
         tag_name: ${{ env.RELEASE_TAG }}
         release_name: Release ${{ env.RELEASE_TAG }}
         draft: false
-        prerelease: ${{ github.ref == 'refs/heads/devel' }}
+        body: |
+            Automated release
+        prerelease: ${{ github.ref == 'refs/heads/test' }}
